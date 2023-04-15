@@ -1,9 +1,18 @@
+// Récupération des variables d'environnement
+require('dotenv').config();
+const host = process.env.HOST;
+const user = process.env.USER;
+const pwd = process.env.PWD;
+const database = process.env.DB;
+
+// Connexion à la base de données
 const mysql = require('mysql')
 const db = mysql.createConnection({
-host: "mysql-projet-recette.alwaysdata.net",
-user: "309592",
-password: "8k5kxdYEqzt7ixT",
-database:"projet-recette_ipssi" 
+host: host,
+user: user,
+password: pwd,
+database: database 
 })
 
+// Exportation de la connexion
 module.exports = db;
