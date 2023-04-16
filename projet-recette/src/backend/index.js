@@ -42,6 +42,21 @@ app.post("/api/insert/user", (req,res)=>{
     });
 })
 
+// Route pour la connexion d'un utilisateur
+app.get("/api/check/email", (req,res)=>{
+    const email = req.query.email;
+    console.log(email); // Affiche la valeur de l'email dans la console du serveur
+    const sqlCheck = "SELECT email FROM `user` WHERE `email` = ?";
+    db.query(sqlCheck, [email], (err,result)=>{
+        if(err) {
+            console.log(err)
+            res.status(500).send('Erreur lors de la requête à la base de données');
+        }
+        console.log(result); // Affiche le résultat de la requête SQL dans la console du serveur
+        res.send({exists: result.length > 0})
+    });
+})
+
 // Route pour les requêtes de recherche
 app.listen(PORT, ()=>{
     console.log(`Server is running on http://localhost:${PORT}`)
