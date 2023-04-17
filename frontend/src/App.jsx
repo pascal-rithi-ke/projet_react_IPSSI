@@ -3,7 +3,8 @@ import "./style/App.css";
 
 import Login from "./componant/user/Login";
 import Inscription from "./componant/user/Inscription";
-import NewRecipe from "./componant/Recette/Recette";
+// import Recettes from "./componant/Recettes/Recettes";
+import NewRecipe from "./componant/NouvelleRecette/NouvelleRecette";
 import Ingredients from "./componant/ingredients/Ingredients";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<h1>Accueil</h1>} />
-        <Route path="recette" element={<h1>Recette</h1>} />
+        <Route path="recette" element={<h1>Recettes</h1>} />
         <Route path="ingredients" element={<Ingredients />} />
 
         <Route path="login" element={<Login />} />
