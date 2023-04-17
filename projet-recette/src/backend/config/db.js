@@ -1,5 +1,6 @@
 // Récupération des variables d'environnement
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Définition des variables d'environnement
 const host = process.env.REACT_APP_HOST;
@@ -8,7 +9,7 @@ const pwd = process.env.REACT_APP_PWD;
 const db = process.env.REACT_APP_DB;
 
 // Connexion à la base de données
-const mysql = require('mysql')
+import mysql from 'mysql';
 const db_connect = mysql.createConnection({
 host: host,
 user: user,
@@ -17,4 +18,4 @@ database: db
 })
 
 // Exportation de la connexion
-module.exports = db_connect;
+export default db_connect;

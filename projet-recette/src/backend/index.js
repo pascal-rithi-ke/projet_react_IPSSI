@@ -1,12 +1,12 @@
 // Importation des modules nécessaires pour le backend
-const express = require('express');
-const cors = require('cors')
+import express from 'express';
+import cors from 'cors';
 
 // Importation de la connexion à la base de données
-const db = require('./config/db')
+import db_connect from './config/db.js';
 
 // Importation du module de hashage de mot de passe
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 // Création de l'application express
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.json())
 
 // Route pour la récupération des ingrédients
 app.get("/api/get/ingredient", (req,res)=>{
-    db.query("SELECT * FROM ingredient", (err,result)=>{
+    db_connect.query("SELECT * FROM ingredient", (err,result)=>{
     if(err) {
         console.log(err)
     } 
@@ -34,7 +34,7 @@ app.post("/api/insert/user", (req,res)=>{
     // hashage du mdp
     const hashedPassword = bcrypt.hashSync(password, salt);
     const sqlInsert = "INSERT INTO `user` (`pseudo`, `mdp`, `email`) VALUES (?,?,?)";
-    db.query(sqlInsert, [pseudo,hashedPassword,email], (err,result)=>{
+    db_connect.query(sqlInsert, [pseudo,hashedPassword,email], (err,result)=>{
         if(err) {
             console.log(err)
         } 
@@ -47,7 +47,7 @@ app.get("/api/check/email", (req,res)=>{
     const email = req.query.email;
     console.log(email); // Affiche la valeur de l'email dans la console du serveur
     const sqlCheck = "SELECT email FROM `user` WHERE `email` = ?";
-    db.query(sqlCheck, [email], (err,result)=>{
+    db_connect.query(sqlCheck, [email], (err,result)=>{
         if(err) {
             console.log(err)
             res.status(500).send('Erreur lors de la requête à la base de données');
