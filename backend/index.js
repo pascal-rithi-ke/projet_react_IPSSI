@@ -26,6 +26,37 @@ app.get("/api/get/ingredient", (req,res)=>{
     });
 });
 
+app.post('/api/login', (req, res) => {
+    const { pseudo, password } = req.body;
+    const sqlCheck = 'SELECT pseudo, mdp FROM `user` WHERE `pseudo` = ? LIMIT 1';
+    db_connect.query(sqlCheck, [pseudo], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Erreur lors de la requête à la base de données');
+        } else {
+            if (result.length > 0) {
+                // Vérifier le mot de passe
+                bcrypt.compare(password, result[0].mdp, (err, isValid) => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).send('Erreur lors de la vérification du mot de passe');
+                    } else {
+                        if (isValid) {
+                            res.json({ success: true, message: 'Connexion réussie' });
+                        } else {
+                            res.json({ success: false, message: 'Mauvais mot de passe' });
+                        }
+                    }
+                    return;
+                });
+            } else {
+                res.json({ success: false, message: "L'utilisateur n'existe pas" });
+                return;
+            }
+        }
+    });
+});
+
 // Inscription d'un nouvel utilisateur
 app.post("/api/insert/user", (req,res)=>{
     const {pseudo, password, email} = req.body;
