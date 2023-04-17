@@ -42,7 +42,7 @@ app.post('/api/login', (req, res) => {
                         res.status(500).send('Erreur lors de la vérification du mot de passe');
                     } else {
                         if (isValid) {
-                            res.json({ success: true, message: 'Connexion réussie' });
+                            res.json({ success: true, message: 'Connexion réussie', pseudo: result[0].pseudo });
                         } else {
                             res.json({ success: false, message: 'Mauvais mot de passe' });
                         }

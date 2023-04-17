@@ -29,7 +29,10 @@ function Login({ setIsLogged }) {
         if (response.data.success) {
           // Rediriger l'utilisateur vers la page d'accueil
           setIsLogin(true);
-          setIsLogged(true); // Set isLogged to true
+          setIsLogged(true); 
+          // Mettre à jour le pseudo de l'utilisateur connecté
+          setPseudo(response.data.pseudo);
+          localStorage.setItem("pseudo", response.data.pseudo);
         } else {
           setError("Erreur de connexion");
         }
