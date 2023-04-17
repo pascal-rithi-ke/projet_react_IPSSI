@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { IngredientsContext } from "../../contexts/Ingredients";
 import axios from "axios";
 
+// Fonction permettant d'ajouter un ingrédient avec une requête POST à l'API
 async function addIngredient(ingredient) {
   try {
     const response = await axios.post(
@@ -17,11 +18,13 @@ async function addIngredient(ingredient) {
 export default function Ingredients() {
   const { ingredients } = useContext(IngredientsContext);
 
+  // Création d'un state pour stocker les valeurs du formulaire
   const [newIngredient, setNewIngredient] = useState({
     name: "",
     unit: "",
   });
 
+  // Fonction qui utilise la fonction addIngredient pour ajouter un ingrédient et le stocker dans le state
   const handleSubmit = (e) => {
     e.preventDefault();
     addIngredient(newIngredient);
@@ -29,6 +32,7 @@ export default function Ingredients() {
     setNewIngredient({ name: "", unit: "" });
   };
 
+  // Fonctions qui permettent de mettre à jour et de supprimer un ingrédient
   const handleUpdate = (id) => {
     console.log("test update", id);
   };
