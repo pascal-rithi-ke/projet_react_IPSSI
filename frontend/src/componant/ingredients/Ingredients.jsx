@@ -30,10 +30,10 @@ export default function Ingredients() {
               value={ingredient.unite_quantite}
               onChange={() => console.log("Hello world!")}
             />
-            <button type="button" onClick={handleUpdate(ingredient.id)}>
+            <button type="button" onClick={() => handleUpdate(ingredient.id)}>
               Mettre à jour
             </button>
-            <button type="button" onClick={handleDelete(ingredient.id)}>
+            <button type="button" onClick={() => handleDelete(ingredient.id)}>
               Supprimer
             </button>
           </article>
