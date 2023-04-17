@@ -1,14 +1,14 @@
 import { Link, Route, Routes, createPath } from "react-router-dom";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 import "./style/App.css";
 
-import Login from "./componant/user/Login";
-import Logout from "./componant/user/Logout";
-import Inscription from "./componant/user/Inscription";
-// import Recettes from "./componant/Recettes/Recettes";
-import NewRecipe from "./componant/NouvelleRecette/NouvelleRecette";
-import Ingredients from "./componant/ingredients/Ingredients";
+import Login from "./components/user/Login";
+import Logout from "./components/user/Logout";
+import Inscription from "./components/user/Inscription";
+// import Recettes from "./components/Recettes/Recettes";
+import NewRecipe from "./components/NouvelleRecette/NouvelleRecette";
+import Ingredients from "./components/ingredients/Ingredients";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -21,7 +21,7 @@ function App() {
     } else {
       setPseudo("");
     }
-  }, [isLogged]);  
+  }, [isLogged]);
 
   const handleLogout = () => {
     // Effectuer les actions nécessaires pour déconnecter l'utilisateur
@@ -56,11 +56,7 @@ function App() {
         <Route path="inscription" element={<Inscription />} />
         <Route path="nouvelle-recette" element={<NewRecipe />} />
       </Routes>
-      {isLogged ? (
-        <p>Bonjour {pseudo}</p>
-      ) : (
-        <p>Bienvenue sur notre site</p>
-      )}
+      {isLogged ? <p>Bonjour {pseudo}</p> : <p>Bienvenue sur notre site</p>}
     </div>
   );
 }
