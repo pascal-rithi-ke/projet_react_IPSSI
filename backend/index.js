@@ -11,10 +11,11 @@ app.use(cors());
 app.use(express.json());
 
 // Import des routes
-import { ingredientRouter, userRouter } from "./routes/index.js";
+import { ingredientRouter, recipeRouter, userRouter } from "./routes/index.js";
 
 app.use("/api", userRouter);
 app.use("/api/ingredient", ingredientRouter);
+app.use("/api/recipe", recipeRouter);
 
 // Route pour les requêtes de recherche
 app.listen(PORT, () => {
