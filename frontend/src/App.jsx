@@ -32,8 +32,8 @@ function App() {
   return (
     <div className="App">
       <div className="navBar">
-        <Link to="/">Accueil</Link>
-        <Link to="/recette">Recette</Link>
+        <Link to="/">Recette</Link>
+        <Link to="/nouvelle-recette">Nouvelle Recette</Link>
         <Link to="/ingredients">Ingrédients</Link>
         {isLogged ? (
           <Link to="/" onClick={handleLogout}>
@@ -42,12 +42,10 @@ function App() {
         ) : (
           <Link to="/login">Login</Link>
         )}
-        <Link to="/nouvelle-recette">Nouvelle Recette</Link>
       </div>
 
       <Routes>
-        <Route path="/" element={<h1>Accueil</h1>} />
-        <Route path="recette" element={<h1>Recettes</h1>} />
+        <Route path="" element={<h1>Recettes</h1>} />
         <Route path="ingredients" element={<Ingredients />} />
 
         <Route path="login" element={<Login setIsLogged={setIsLogged} />} />
