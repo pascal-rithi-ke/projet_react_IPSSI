@@ -12,19 +12,21 @@ import Ingredients from "./componant/ingredients/Ingredients";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
-  const [pseudo, setPseudo] = useState("")
+  const [pseudo, setPseudo] = useState("");
 
   useEffect(() => {
     const storedPseudo = localStorage.getItem("pseudo");
     if (storedPseudo) {
       setPseudo(storedPseudo);
+    } else {
+      setPseudo("");
     }
-  }, []);
+  }, [isLogged]);  
 
   const handleLogout = () => {
     // Effectuer les actions nécessaires pour déconnecter l'utilisateur
-    setIsLogged(false);
     localStorage.removeItem("pseudo");
+    setIsLogged(false);
   };
 
   return (
@@ -47,7 +49,7 @@ function App() {
         <Route path="ingredients" element={<Ingredients />} />
 
         <Route path="login" element={<Login setIsLogged={setIsLogged} />} />
-        <Route path="logout" element={<Logout />} />
+        <Route path="logout" element={<Logout setIsLogged={handleLogout} />} />
 
         <Route path="inscription" element={<Inscription />} />
         <Route path="nouvelle-recette" element={<NewRecipe />} />

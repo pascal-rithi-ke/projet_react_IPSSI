@@ -31,7 +31,6 @@ function Login({ setIsLogged }) {
           setIsLogin(true);
           setIsLogged(true); 
           // Mettre à jour le pseudo de l'utilisateur connecté
-          setPseudo(response.data.pseudo);
           localStorage.setItem("pseudo", response.data.pseudo);
         } else {
           setError("Erreur de connexion");
