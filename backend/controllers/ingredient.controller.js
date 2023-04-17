@@ -2,18 +2,21 @@
 import db_connect from "../config/db.js";
 
 export const getAllIngredients = (_req, res) => {
-  db_connect.query("SELECT * FROM ingredient", (err, result) => {
-    if (err) {
-      console.log(err);
+  db_connect.query(
+    "SELECT ingredient.id, ingredient.nom, liste_ingredient.quantite_ingredient, unite.nom AS unite_quantite, unite.label AS unite_label FROM `ingredient` JOIN liste_ingredient on id_ingredient = ingredient.id JOIN unite on id_unite = unite.id",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
     }
-    res.send(result);
-  });
+  );
 };
 
 export const getIngredientById = (req, res) => {
   const { id } = req.params;
   db_connect.query(
-    "SELECT * FROM ingredient WHERE id = ?",
+    "SELECT ingredient.id, ingredient.nom, liste_ingredient.quantite_ingredient, unite.nom AS unite_quantite, unite.label AS unite_label FROM `ingredient` JOIN liste_ingredient on id_ingredient = ingredient.id JOIN unite on id_unite = unite.id WHERE ingredient.id = ?",
     [id],
     (err, result) => {
       if (err) {
