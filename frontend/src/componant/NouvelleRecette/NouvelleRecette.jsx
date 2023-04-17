@@ -36,6 +36,8 @@ function NewRecipe() {
     );
 }
 
+export default NewRecipe
+
 
 
 
