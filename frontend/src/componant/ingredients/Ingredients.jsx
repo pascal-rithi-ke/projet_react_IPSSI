@@ -12,14 +12,14 @@ export default function Ingredients() {
           <article key={ingredient.id}>
             <input
               type="text"
-              name={ingredient.name}
-              value={ingredient.name}
+              name={ingredient.nom}
+              value={ingredient.nom}
               onChange={() => console.log("Hello world!")}
             />
             <input
               type="text"
-              name="test"
-              value="test"
+              name={ingredient.unite_quantite}
+              value={ingredient.unite_quantite}
               onChange={() => console.log("Hello world!")}
             />
             <button
