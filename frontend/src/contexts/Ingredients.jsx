@@ -26,7 +26,7 @@ const IngredientsProvider = ({ children }) => {
     setIngredients(ingredients);
   };
 
-  // Hook qui permet d'exécuter la fonction getIngredientsFromAPI au chargement du composant et à chaque fois que ingredients change
+  // Hook qui permet d'exécuter la fonction getIngredientsFromAPI au chargement du composant
   useEffect(() => {
     getIngredientsFromAPI();
   }, []);
