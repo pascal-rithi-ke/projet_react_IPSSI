@@ -33,6 +33,10 @@
   }
 }
 
+.navBar a{
+  margin: 40px;
+}
+
 .card {
   padding: 2em;
 }

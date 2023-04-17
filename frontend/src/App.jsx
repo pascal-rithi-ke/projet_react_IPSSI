@@ -31,17 +31,19 @@ function App() {
 
   return (
     <div className="App">
-      <Link to="/">Accueil</Link>
-      <Link to="/recette">Recette</Link>
-      <Link to="/ingredients">Ingrédients</Link>
-      {isLogged ? (
-        <Link to="/" onClick={handleLogout}>
-          Logout
-        </Link>
-      ) : (
-        <Link to="/login">Login</Link>
-      )}
-      <Link to="/nouvelle-recette">Nouvelle Recette</Link>
+      <div className="navBar">
+        <Link to="/">Accueil</Link>
+        <Link to="/recette">Recette</Link>
+        <Link to="/ingredients">Ingrédients</Link>
+        {isLogged ? (
+          <Link to="/" onClick={handleLogout}>
+            Logout
+          </Link>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
+        <Link to="/nouvelle-recette">Nouvelle Recette</Link>
+      </div>
 
       <Routes>
         <Route path="/" element={<h1>Accueil</h1>} />
