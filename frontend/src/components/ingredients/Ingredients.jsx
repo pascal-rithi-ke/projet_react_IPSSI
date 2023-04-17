@@ -47,6 +47,7 @@ export default function Ingredients() {
       <div>
         {ingredients.map((ingredient) => (
           <article key={ingredient.id}>
+            {/* TODO: Modifier value et onChange */}
             <input
               type="text"
               name={ingredient.nom}
