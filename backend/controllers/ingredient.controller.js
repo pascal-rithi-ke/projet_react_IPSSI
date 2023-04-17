@@ -28,15 +28,30 @@ export const getIngredientById = (req, res) => {
 };
 
 export const addIngredient = (req, res) => {
-  const { name, quantity, unit } = req.body;
+  const { name, unit } = req.body;
+
+  let ingredientResult;
+
   db_connect.query(
-    "INSERT INTO ingredient (name, quantity, unit) VALUES (?, ?, ?)",
-    [name, quantity, unit],
+    "INSERT INTO ingredient (nom) VALUES (?)",
+    [name],
     (err, result) => {
       if (err) {
         console.log(err);
+      } else {
+        ingredientResult = result;
+
+        db_connect.query(
+          "INSERT INTO liste_ingredient (id_ingredient, id_unite) VALUES (?, ?)",
+          [ingredientResult.insertId, unit],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            }
+            res.send({ ingredientResult, result });
+          }
+        );
       }
-      res.send(result);
     }
   );
 };
