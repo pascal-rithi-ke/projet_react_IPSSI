@@ -1,13 +1,18 @@
 // Import de la connexion à la base de données
 import db_connect from "../config/db.js";
 
+// Query to get all ingredients: SELECT ingredient.id, ingredient.nom, liste_ingredient.quantite_ingredient, unite.nom AS unite_quantite, unite.label AS unite_label FROM `ingredient` JOIN liste_ingredient on id_ingredient = ingredient.id JOIN unite on id_unite = unite.id;
+
 export const getAllIngredients = (_req, res) => {
-  db_connect.query("SELECT * FROM ingredient", (err, result) => {
-    if (err) {
-      console.log(err);
+  db_connect.query(
+    "SELECT ingredient.id, ingredient.nom, liste_ingredient.quantite_ingredient, unite.nom AS unite_quantite, unite.label AS unite_label FROM `ingredient` JOIN liste_ingredient on id_ingredient = ingredient.id JOIN unite on id_unite = unite.id",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
     }
-    res.send(result);
-  });
+  );
 };
 
 export const getIngredientById = (req, res) => {
