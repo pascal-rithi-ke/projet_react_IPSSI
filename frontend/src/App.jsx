@@ -6,6 +6,8 @@ import "./style/App.css";
 import Login from "./componant/user/Login";
 import Logout from "./componant/user/Logout";
 import Inscription from "./componant/user/Inscription";
+import NewRecipe from "./componant/Recette/Recette";
+import Ingredients from "./componant/ingredients/Ingredients";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -28,6 +30,7 @@ function App() {
     <div className="App">
       <Link to="/">Accueil</Link>
       <Link to="/recette">Recette</Link>
+      <Link to="/ingredients">Ingrédients</Link>
       {isLogged ? (
         <Link to="/" onClick={handleLogout}>
           Logout
@@ -35,15 +38,18 @@ function App() {
       ) : (
         <Link to="/login">Login</Link>
       )}
+      <Link to="/nouvelle-recette">Nouvelle Recette</Link>
 
       <Routes>
         <Route path="/" element={<h1>Accueil</h1>} />
         <Route path="recette" element={<h1>Recette</h1>} />
+        <Route path="ingredients" element={<Ingredients />} />
 
         <Route path="login" element={<Login setIsLogged={setIsLogged} />} />
         <Route path="logout" element={<Logout />} />
 
         <Route path="inscription" element={<Inscription />} />
+        <Route path="nouvelle-recette" element={<NewRecipe />} />
       </Routes>
       {isLogged ? (
         <p>Bonjour {pseudo}</p>
