@@ -32,10 +32,10 @@ function Login({ setIsLogged }) {
           setIsLogged(true); 
           // Mettre à jour le pseudo de l'utilisateur connecté
           localStorage.setItem("pseudo", response.data.pseudo);
+          console.log(response.data);
         } else {
-          setError("Erreur de connexion");
+          setError("Erreur: "+ response.data.message);
         }
-        console.log(response.data.message);
       } catch (error) {
         console.log(error);
         setError("Une erreur est survenue lors de la connexion");

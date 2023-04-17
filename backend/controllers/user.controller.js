@@ -4,6 +4,38 @@ import db_connect from "../config/db.js";
 // Import du module de hashage de mot de passe
 import bcrypt from "bcrypt";
 
+
+export const login = (req, res) => {
+  const { pseudo, password } = req.body;
+  const sqlCheck = 'SELECT pseudo, mdp FROM `user` WHERE `pseudo` = ? LIMIT 1';
+  db_connect.query(sqlCheck, [pseudo], (err, result) => {
+      if (err) {
+          console.log(err);
+          res.status(500).send('Erreur lors de la requête à la base de données');
+      } else {
+          if (result.length > 0) {
+              // Vérifier le mot de passe
+              bcrypt.compare(password, result[0].mdp, (err, isValid) => {
+                  if (err) {
+                      console.log(err);
+                      res.status(500).send('Erreur lors de la vérification du mot de passe');
+                  } else {
+                      if (isValid) {
+                          res.json({ success: true, message: 'Connexion réussie', pseudo: result[0].pseudo});
+                      } else {
+                          res.json({ success: false, message: 'Mauvais mot de passe' });
+                      }
+                  }
+                  return;
+              });
+          } else {
+              res.json({ success: false, message: "L'utilisateur n'existe pas" });
+              return;
+          }
+      }
+  });
+};
+
 export const insertUser = (req, res) => {
   const { pseudo, password, email } = req.body;
   // génère un sel pour renforcer la sécurité du hashage
@@ -22,18 +54,4 @@ export const insertUser = (req, res) => {
       res.send(result);
     }
   );
-};
-
-export const checkEmail = (req, res) => {
-  const email = req.query.email;
-  console.log(email); // Affiche la valeur de l'email dans la console du serveur
-  const sqlCheck = "SELECT email FROM `user` WHERE `email` = ?";
-  db_connect.query(sqlCheck, [email], (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Erreur lors de la requête à la base de données");
-    }
-    console.log(result); // Affiche le résultat de la requête SQL dans la console du serveur
-    res.send({ exists: result.length > 0 });
-  });
 };
