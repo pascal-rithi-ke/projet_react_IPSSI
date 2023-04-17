@@ -37,8 +37,13 @@ export default function Ingredients() {
     console.log("test update", id);
   };
 
-  const handleDelete = (id) => {
-    console.log("test delete", id);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3002/api/ingredient/${id}`);
+      console.log(`Suppression de l'ingrédient ${id}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
