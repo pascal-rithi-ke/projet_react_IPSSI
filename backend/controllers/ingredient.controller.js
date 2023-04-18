@@ -58,6 +58,7 @@ export const addIngredient = (req, res) => {
           // Renvoi de la réponse au front avec les données de l'ingrédient ajouté
           res.json({
             success: true,
+            message: `${name} ajouté à la liste des ingrédients`,
             ingredient: {
               id: ingredientId,
               ...req.body,
