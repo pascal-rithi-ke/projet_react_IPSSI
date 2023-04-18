@@ -112,18 +112,37 @@ export const updateIngredient = (req, res) => {
 
 export const deleteIngredient = (req, res) => {
   const { id } = req.params;
+
+  // Suppression de l'ingrédient dans la table liste_ingredient
   db_connect.query(
-    "DELETE FROM ingredient WHERE id = ?",
+    "DELETE FROM liste_ingredient WHERE id_ingredient = ?",
     [id],
-    (err, result) => {
+    (err, _result) => {
       if (err) {
         console.error(err);
         res.status(500).send("Erreur lors de la suppression de l'ingrédient");
       }
-      res.json({
-        success: true,
-        message: "L'ingrédient a bien été supprimé",
-      });
+
+      // Suppression de l'ingrédient dans la table ingredient
+      db_connect.query(
+        "DELETE FROM ingredient WHERE id = ?",
+        [id],
+        (err, _result) => {
+          if (err) {
+            console.error(err);
+            res
+              .status(500)
+              .send("Erreur lors de la suppression de l'ingrédient");
+          }
+
+          // Renvoi de la réponse au front avec l'id de l'ingrédient supprimé
+          res.json({
+            success: true,
+            message: "L'ingrédient a bien été supprimé",
+            id,
+          });
+        }
+      );
     }
   );
 };
