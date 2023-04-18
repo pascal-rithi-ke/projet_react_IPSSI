@@ -1,48 +1,39 @@
 import { useContext, useState } from "react";
 import { IngredientsContext } from "../../contexts/Ingredients";
-import axios from "axios";
 
-// Fonction permettant d'ajouter un ingrédient avec une requête POST à l'API
-async function addIngredient(ingredient) {
-  try {
-    const response = await axios.post(
-      "http://localhost:3002/api/ingredient",
-      ingredient
-    );
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
+import AddIngredientForm from "./AddIngredientForm";
+
+// Import des fonctions qui permettent d'interagir avec l'API
+import { updateIngredient, deleteIngredient } from "../../utils/ingredients";
 
 export default function Ingredients() {
-  const { ingredients } = useContext(IngredientsContext);
+  const { ingredients, setIngredients } = useContext(IngredientsContext);
 
-  // Création d'un state pour stocker les valeurs du formulaire
-  const [newIngredient, setNewIngredient] = useState({
-    name: "",
-    unit: "",
-  });
+  // Fonction qui permet de mettre à jour un ingrédient
+  const handleUpdate = async (id) => {
+    // Appel à l'API pour mettre à jour un ingrédient
+    const data = updateIngredient(id);
 
-  // Fonction qui utilise la fonction addIngredient pour ajouter un ingrédient et le stocker dans le state
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addIngredient(newIngredient);
-
-    setNewIngredient({ name: "", unit: "" });
+    // Mise à jour de l'ingrédient dans le state du contexte
+    if (data.success) {
+      setIngredients(
+        ingredients.map((ingredient) =>
+          ingredient.id === id
+            ? { ...ingredient, nom: data.ingredient.name }
+            : ingredient
+        )
+      );
+    }
   };
 
-  // Fonctions qui permettent de mettre à jour et de supprimer un ingrédient
-  const handleUpdate = (id) => {
-    console.log("test update", id);
-  };
-
+  // Fonction qui permet de supprimer un ingrédient
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3002/api/ingredient/${id}`);
-      console.log(`Suppression de l'ingrédient ${id}`);
-    } catch (error) {
-      console.error(error);
+    // Appel à l'API pour supprimer un ingrédient
+    const data = await deleteIngredient(id);
+
+    // Suppression de l'ingrédient dans le state du contexte
+    if (data.success) {
+      setIngredients(ingredients.filter((ingredient) => ingredient.id !== id));
     }
   };
 
@@ -59,12 +50,6 @@ export default function Ingredients() {
               value={ingredient.nom}
               onChange={() => console.log("Hello world!")}
             />
-            <input
-              type="text"
-              name={ingredient.unite_quantite}
-              value={ingredient.unite_quantite}
-              onChange={() => console.log("Hello world!")}
-            />
             <button type="button" onClick={() => handleUpdate(ingredient.id)}>
               Mettre à jour
             </button>
@@ -75,33 +60,7 @@ export default function Ingredients() {
         ))}
         <br />
         <article>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Nom de l'ingrédient"
-              min={3}
-              required={true}
-              value={newIngredient.name}
-              onChange={(e) =>
-                setNewIngredient({ ...newIngredient, name: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              name="unit"
-              placeholder="Unité"
-              required={true}
-              value={newIngredient.unit}
-              onChange={(e) =>
-                setNewIngredient({
-                  ...newIngredient,
-                  unit: e.target.value,
-                })
-              }
-            />
-            <button type="submit">Créer</button>
-          </form>
+          <AddIngredientForm />
         </article>
       </div>
     </div>
