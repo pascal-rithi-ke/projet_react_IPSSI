@@ -1,15 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
-
-// Fonction permettant de récupérer les ingrédients de l'API
-async function getIngredients() {
-  try {
-    const response = await axios.get("http://localhost:3002/api/ingredient");
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
+import { getAllIngredients } from "../utils/ingredients";
 
 // Création du contexte
 const IngredientsContext = createContext({
@@ -22,7 +12,7 @@ const IngredientsProvider = ({ children }) => {
 
   // Fonction qui utilise la fonction getIngredients pour récupérer les ingrédients et les stocker dans le state
   const getIngredientsFromAPI = async () => {
-    const ingredients = await getIngredients();
+    const ingredients = await getAllIngredients();
     setIngredients(ingredients);
   };
 

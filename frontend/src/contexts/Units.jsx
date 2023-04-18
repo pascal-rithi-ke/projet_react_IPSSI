@@ -1,15 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
-
-// Fonction permettant de récupérer les unités de l'API
-async function getUnits() {
-  try {
-    const response = await axios.get("http://localhost:3002/api/unit");
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
+import { getAllUnits } from "../utils/units";
 
 // Création du contexte
 const UnitsContext = createContext({
@@ -22,7 +12,7 @@ const UnitsProvider = ({ children }) => {
 
   // Fonction qui utilise la fonction getIngredients pour récupérer les ingrédients et les stocker dans le state
   const getUnitsFromAPI = async () => {
-    const units = await getUnits();
+    const units = await getAllUnits();
     setUnits(units);
   };
 
