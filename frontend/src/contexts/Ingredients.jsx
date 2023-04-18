@@ -23,7 +23,7 @@ const IngredientsProvider = ({ children }) => {
 
   // On retourne le contexte avec les ingrédients en value
   return (
-    <IngredientsContext.Provider value={{ ingredients }}>
+    <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
       {children}
     </IngredientsContext.Provider>
   );
