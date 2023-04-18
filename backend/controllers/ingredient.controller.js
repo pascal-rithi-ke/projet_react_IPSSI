@@ -6,7 +6,8 @@ export const getAllIngredients = (_req, res) => {
     "SELECT ingredient.id, ingredient.nom, liste_ingredient.quantite_ingredient, unite.nom AS unite_quantite, unite.label AS unite_label FROM `ingredient` JOIN liste_ingredient on id_ingredient = ingredient.id JOIN unite on id_unite = unite.id",
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de la récupération des ingrédients");
       }
       res.send(result);
     }
@@ -20,7 +21,8 @@ export const getIngredientById = (req, res) => {
     [id],
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de la récupération de l'ingrédient");
       }
       res.send(result);
     }
@@ -37,7 +39,8 @@ export const addIngredient = (req, res) => {
     [name],
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de l'ajout de l'ingrédient");
       } else {
         ingredientResult = result;
 
@@ -46,7 +49,8 @@ export const addIngredient = (req, res) => {
           [ingredientResult.insertId, unit],
           (err, result) => {
             if (err) {
-              console.log(err);
+              console.error(err);
+              res.status(500).send("Erreur lors de l'ajout de l'ingrédient");
             }
             res.send({ ingredientResult, result });
           }
@@ -64,7 +68,8 @@ export const updateIngredient = (req, res) => {
     [name, quantity, unit, id],
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de la modification de l'ingrédient");
       }
       res.send(result);
     }
@@ -78,7 +83,8 @@ export const deleteIngredient = (req, res) => {
     [id],
     (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de la suppression de l'ingrédient");
       }
       res.send(result);
     }

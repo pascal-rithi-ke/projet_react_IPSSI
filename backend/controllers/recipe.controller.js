@@ -4,7 +4,8 @@ import db_connect from "../config/db.js";
 export const getAllRecipes = (_req, res) => {
   db_connect.query("SELECT * FROM recette", (err, results) => {
     if (err) {
-      console.log(err);
+      console.error(err);
+      res.status(500).send("Erreur lors de la récupération des recettes");
     } else {
       res.send(results);
     }
@@ -16,7 +17,8 @@ export const getRecipeById = (req, res) => {
 
   db_connect.query("SELECT * FROM recette WHERE id = ?", id, (err, results) => {
     if (err) {
-      console.log(err);
+      console.error(err);
+      res.status(500).send("Erreur lors de la récupération de la recette");
     } else {
       res.send(results);
     }
@@ -31,7 +33,8 @@ export const addRecipe = (req, res) => {
     [nom, description, url_img, ingredients],
     (err, results) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de l'ajout de la recette");
       } else {
         res.send(results);
       }
@@ -48,7 +51,8 @@ export const updateRecipe = (req, res) => {
     [nom, description, url_img, ingredients, id],
     (err, results) => {
       if (err) {
-        console.log(err);
+        console.error(err);
+        res.status(500).send("Erreur lors de la modification de la recette");
       } else {
         res.send(results);
       }
@@ -61,7 +65,8 @@ export const deleteRecipe = (req, res) => {
 
   db_connect.query("DELETE FROM recette WHERE id = ?", id, (err, results) => {
     if (err) {
-      console.log(err);
+      console.error(err);
+      res.status(500).send("Erreur lors de la suppression de la recette");
     } else {
       res.send(results);
     }
