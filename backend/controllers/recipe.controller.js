@@ -99,8 +99,7 @@ export const deleteRecipe = (req, res) => {
 
 export const deleteIngredientFromRecipe = (req, res) => {
   const { recipeId, ingredientId } = req.params;
-
-  db_connect.query("DELETE FROM liste_ingredient WHERE id_recette = ? AND id_ingredient = ?", [recipeId, ingredientId], (err, results) => {
+  db_connect.query("DELETE FROM liste_ingredient WHERE id_recette = ? AND id = ?", [recipeId, ingredientId], (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).send("Erreur lors de la suppression de l'ingrédient de la recette");

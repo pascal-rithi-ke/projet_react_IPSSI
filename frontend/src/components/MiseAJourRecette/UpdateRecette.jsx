@@ -22,15 +22,15 @@ function UpdateRecette() {
         event.preventDefault();
         const updatedIngredients = [...ingredients];
         const ingredientIndex = updatedIngredients.findIndex((ingredient) => ingredient.ingredient_id === ingredientId);
-        
+
         const ingredientDiv = document.getElementById(`ingredient-${ingredientId}`);
-        
+
         const qt_ingredient = ingredientDiv.querySelector('.input-quantity').value;
         const unite_nom = ingredientDiv.querySelector('.select-unit').value;
         const unite_id = ingredientDiv.querySelector('.select-unit option:checked').id;
 
-        updatedIngredients[ingredientIndex] = { ...updatedIngredients[ingredientIndex], qt_ingredient, unite_nom, unite_id};
-        
+        updatedIngredients[ingredientIndex] = { ...updatedIngredients[ingredientIndex], qt_ingredient, unite_nom, unite_id };
+
         const updateListeIngredientRecipe = {
             ingredient_id: updatedIngredients[ingredientIndex].ingredient_id,
             qt_ingredient: updatedIngredients[ingredientIndex].qt_ingredient,
@@ -39,21 +39,33 @@ function UpdateRecette() {
         axios.put(`http://localhost:3002/api/recipe/${updateListeIngredientRecipe.recette_id}`, updateListeIngredientRecipe)
             .then(response => {
                 console.log(response);
+                // Rafraîchir la liste des ingrédients en récupérant les dernières informations de la base de données
+                axios.get(`http://localhost:3002/api/recipe/3`)
+                .then(response => {
+                    const data = response.data;
+                    setIngredient(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
             })
             .catch(error => {
                 console.error('Error fetching JSON:', error);
             });
     };
 
-    const handleDelete = async (event, ingredientId) => {
-      event.preventDefault();
-
-      // 3 à remplacer par l'ID de la recette
-      const response = await axios.delete(`http://localhost:3002/api/recipe/${3}/ingredient/${ingredientId}`);
-
-      if (response.success) {
-        setIngredient(ingredients.filter((ingredient) => ingredient.ingredient_id !== ingredientId));
-      }
+    const handleDelete = (event, ingredientId) => {
+        event.preventDefault();
+        const ingredient_id = ingredientId;
+        // 3 à remplacer par l'ID de la recette
+        axios.delete(`http://localhost:3002/api/recipe/${3}/ingredient/${ingredient_id}`, ingredient_id)
+            .then(response => {
+                console.log(response);
+                setIngredient(ingredients.filter(ingredient => ingredient.ingredient_id !== ingredientId));
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
     };
 
     return (
