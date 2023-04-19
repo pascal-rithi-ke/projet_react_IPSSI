@@ -45,6 +45,17 @@ function UpdateRecette() {
             });
     };
 
+    const handleDelete = async (event, ingredientId) => {
+      event.preventDefault();
+
+      // 3 à remplacer par l'ID de la recette
+      const response = await axios.delete(`http://localhost:3002/api/recipe/${3}/ingredient/${ingredientId}`);
+
+      if (response.success) {
+        setIngredient(ingredients.filter((ingredient) => ingredient.ingredient_id !== ingredientId));
+      }
+    };
+
     return (
         <form>
             <h1>Recette: {TitleRecipe}</h1>
@@ -61,7 +72,7 @@ function UpdateRecette() {
                         ))}
                     </select>
                     <button className='btn-ingredient' onClick={(e) => updateIngredient(e, ingredient.ingredient_id)} key={`update-ingredient-${ingredient.ingredient_id}`}>Mettre à jour</button>
-                    <button className='btn-ingredient' key={`delete-ingredient-${ingredient.ingredient_id}`}>Supprimer</button>
+                    <button className='btn-ingredient' onClick={(event) => handleDelete(event, ingredient.ingredient_id)} key={`delete-ingredient-${ingredient.ingredient_id}`}>Supprimer</button>
                 </div>
             ))}
             <button>Ajouter un ingrédient</button>
