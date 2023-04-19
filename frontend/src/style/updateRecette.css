@@ -1,35 +1,25 @@
-/* Style pour le conteneur principal */
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  /* Style pour le conteneur d'un ingrédient */
-  .ingredient {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  /* Style pour l'input de quantité */
-  .ingredient input {
-    width: 50px;
-    height: 25px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  /* Style pour le select d'unité */
-  .ingredient select {
-    width: 100px;
-    height: 35px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    font-size: 16px;
-    padding: 5px 10px;
-  }
+.ingredient-container{
+  display: flex;
+  margin: 35px;
+  justify-content: center;
+}
+
+.select-unit{
+  height: 25px;
+}
+
+.label-name-ingredient{
+  margin-right: 50px;
+}
+
+.input-quantity{
+  height: 20px;
+  width: 100px;
+}
+
+.btn-ingredient{
+  height: 25px;
+  padding: 0px 20px 0px 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}

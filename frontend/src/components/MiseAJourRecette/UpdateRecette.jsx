@@ -8,7 +8,7 @@ function UpdateRecette() {
     const TitleRecipe = ingredients[0]?.recette_nom;
 
     useEffect(() => {
-        axios.get('http://localhost:3002/api/recipe/1')
+        axios.get('http://localhost:3002/api/recipe/3')
             .then(response => {
                 const data = response.data;
                 setIngredient(data);
@@ -18,28 +18,54 @@ function UpdateRecette() {
             });
     }, []);
 
+    const updateIngredient = (event, ingredientId) => {
+        event.preventDefault();
+        const updatedIngredients = [...ingredients];
+        const ingredientIndex = updatedIngredients.findIndex((ingredient) => ingredient.ingredient_id === ingredientId);
+        
+        const ingredientDiv = document.getElementById(`ingredient-${ingredientId}`);
+        
+        const qt_ingredient = ingredientDiv.querySelector('.input-quantity').value;
+        const unite_nom = ingredientDiv.querySelector('.select-unit').value;
+        const unite_id = ingredientDiv.querySelector('.select-unit option:checked').id;
+
+        updatedIngredients[ingredientIndex] = { ...updatedIngredients[ingredientIndex], qt_ingredient, unite_nom, unite_id};
+        
+        const updateListeIngredientRecipe = {
+            ingredient_id: updatedIngredients[ingredientIndex].ingredient_id,
+            qt_ingredient: updatedIngredients[ingredientIndex].qt_ingredient,
+            unite_id: updatedIngredients[ingredientIndex].unite_id
+        };
+        axios.put(`http://localhost:3002/api/recipe/${updateListeIngredientRecipe.recette_id}`, updateListeIngredientRecipe)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    };
+
     return (
-        <>
+        <form>
             <h1>Recette: {TitleRecipe}</h1>
             {ingredients.map((ingredient, index) => (
                 <div key={index} id={`ingredient-${ingredient.ingredient_id}`} className="ingredient-container">
-                    <p>
-                        {ingredient.ingredient_nom}
-                        <input type="text" defaultValue={ingredient.qt_ingredient} className="input-quantity" />
-                    </p>
+                    <label className='label-name-ingredient'>{ingredient.ingredient_nom}</label>
+                    <input type="text" defaultValue={ingredient.qt_ingredient} className="input-quantity" />
                     <select className="select-unit">
-                        <option value={ingredient.unite_nom}>{ingredient.unite_nom}</option>
+                        <option id={ingredient.unite_id} value={ingredient.unite_nom}>{ingredient.unite_nom}</option>
                         {ingredient.unites.map((unite) => (
-                            <option key={unite.unite_id} value={unite.unite_nom}>
+                            <option id={unite.unite_id} key={unite.unite_id} value={unite.unite_nom}>
                                 {unite.unite_nom}
                             </option>
                         ))}
                     </select>
-                    <button key={`delete-ingredient-${ingredient.ingredient_id}`}>Supprimer</button>
+                    <button className='btn-ingredient' onClick={(e) => updateIngredient(e, ingredient.ingredient_id)} key={`update-ingredient-${ingredient.ingredient_id}`}>Mettre à jour</button>
+                    <button className='btn-ingredient' key={`delete-ingredient-${ingredient.ingredient_id}`}>Supprimer</button>
                 </div>
             ))}
             <button>Ajouter un ingrédient</button>
-        </>
+        </form>
     );
 }
 export default UpdateRecette;

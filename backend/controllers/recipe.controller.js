@@ -65,12 +65,12 @@ export const addRecipe = (req, res) => {
 };
 
 export const updateRecipe = (req, res) => {
-  const { id } = req.params;
-  const { nom, description, url_img, ingredients } = req.body;
+  const recette_id  = 3;
 
-  db_connect.query(
-    "UPDATE recette SET nom = ?, description = ?, url_img = ?, ingredients = ? WHERE id = ?",
-    [nom, description, url_img, ingredients, id],
+  const {qt_ingredient, unite_id, ingredient_id} = req.body;
+
+  db_connect.query("UPDATE `liste_ingredient` SET `quantite_ingredient` = ?, `id_unite` = ? WHERE `liste_ingredient`.`id` = ? AND `liste_ingredient`.`id_recette` = ?",
+    [qt_ingredient, unite_id, ingredient_id, recette_id],
     (err, results) => {
       if (err) {
         console.log(err);
