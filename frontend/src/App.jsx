@@ -33,6 +33,7 @@ function App() {
 
   return (
     <div className="App">
+      {isLogged ? <p>Bonjour {pseudo}</p> : <p>Bienvenue sur notre site</p>}
       <div className="navBar">
         <Link to="/">Recette</Link>
         <Link to="/nouvelle-recette">Nouvelle Recette</Link>
@@ -58,7 +59,6 @@ function App() {
         <Route path="inscription" element={<Inscription />} />
         <Route path="nouvelle-recette" element={<NewRecipe />} />
       </Routes>
-      {isLogged ? <p>Bonjour {pseudo}</p> : <p>Bienvenue sur notre site</p>}
     </div>
   );
 }
