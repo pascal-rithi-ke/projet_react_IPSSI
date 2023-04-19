@@ -7,6 +7,7 @@ import Login from "./components/user/Login";
 import Logout from "./components/user/Logout";
 import Inscription from "./components/user/Inscription";
 // import Recettes from "./components/Recettes/Recettes";
+import UpdateRecette from "./components/MiseAJourRecette/UpdateRecette";
 import NewRecipe from "./components/NouvelleRecette/NouvelleRecette";
 import Ingredients from "./components/ingredients/Ingredients";
 
@@ -34,6 +35,7 @@ function App() {
       <div className="navBar">
         <Link to="/">Recette</Link>
         <Link to="/nouvelle-recette">Nouvelle Recette</Link>
+        <Link to="/update-recette">Mise à jour Recette</Link>
         <Link to="/ingredients">Ingrédients</Link>
         {isLogged ? (
           <Link to="/" onClick={handleLogout}>
@@ -46,6 +48,7 @@ function App() {
 
       <Routes>
         <Route path="" element={<h1>Recettes</h1>} />
+        <Route path="update-recette" element={<UpdateRecette />} />
         <Route path="ingredients" element={<Ingredients />} />
 
         <Route path="login" element={<Login setIsLogged={setIsLogged} />} />

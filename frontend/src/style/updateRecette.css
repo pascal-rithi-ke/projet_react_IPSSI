@@ -1,0 +1,25 @@
+.ingredient-container{
+  display: flex;
+  margin: 35px;
+  justify-content: center;
+}
+
+.select-unit{
+  height: 25px;
+}
+
+.label-name-ingredient{
+  margin-right: 50px;
+}
+
+.input-quantity{
+  height: 20px;
+  width: 100px;
+}
+
+.btn-ingredient{
+  height: 25px;
+  padding: 0px 20px 0px 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
