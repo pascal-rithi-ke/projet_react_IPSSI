@@ -2,7 +2,7 @@
 import db_connect from "../config/db.js";
 
 export const getAllRecipes = (_req, res) => {
-  db_connect.query("SELECT * FROM recette", (err, results) => {
+  db_connect.query("SELECT recette.nom as nom_recette, description, url_img, DATE_FORMAT(mise_en_ligne, '%d/%m/%Y %H:%i:%s') AS mise_en_ligne, pseudo, type_recette.nom as type_recette FROM `recette` JOIN user on recette.id_user = user.id JOIN type_recette on recette.type = type_recette.id;", (err, results) => {
     if (err) {
       console.error(err);
       res.status(500).send("Erreur lors de la récupération des recettes");

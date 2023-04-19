@@ -18,9 +18,10 @@ function RecipeList() {
     <div>
       {recipes.map(recipe => (
         <div key={recipe.id}>
-          <h2>{recipe.nom}</h2>
+          <h2>{recipe.nom_recette} - {recipe.type_recette}</h2>
           <p>{recipe.description}</p>
-          <img src={"https://img.cuisineaz.com/660x660/2016/09/05/i94010-gateau-nature-tout-simple.webp"} alt={recipe.nom} />
+          <p>Publié par {recipe.pseudo} - {recipe.mise_en_ligne}</p>
+          <img src={recipe.url_img} alt={recipe.nom} />
         </div>
       ))}
     </div>
