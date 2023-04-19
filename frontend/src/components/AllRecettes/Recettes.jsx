@@ -1,41 +1,30 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-async function getRecipes() {
-  try {
-    const response = await axios.get("http://localhost:3002/api/recipe"); 
-    return response.data;
-  } catch (err) {
-  console.error(err);
-  }
-}
-
-export default function Recettes() {
+function RecipeList() {
   const [recipes, setRecipes] = useState([]);
 
-  async function getRecipesFromAPI() {
-    const recipes = await getRecipes();
-    setRecipes(recipes);
-  }
-
   useEffect(() => {
-    getRecipes();
-  }, [])
+    axios.get('http://localhost:3002/api/recipe')
+      .then(response => {
+        setRecipes(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div>
-      <h1>Recettes</h1>
-      <div>
-        {/* jsp peut-être avec un truc ici du genre euh */}
-        {recipes.map(recette => (
-          <article id={recette.id}>
-            {/* peut-être plutôt un Link de react router ?? */}
-            <a href={`/Recette/${recette.id}`}>
-              <h3>{recette.nom}</h3>
-            </a>
-          </article>
-        ))}
-      </div>
+      {recipes.map(recipe => (
+        <div key={recipe.id}>
+          <h2>{recipe.nom}</h2>
+          <p>{recipe.description}</p>
+          <img src={"https://img.cuisineaz.com/660x660/2016/09/05/i94010-gateau-nature-tout-simple.webp"} alt={recipe.nom} />
+        </div>
+      ))}
     </div>
   );
 }
+
+export default RecipeList;

@@ -10,6 +10,7 @@ import Inscription from "./components/user/Inscription";
 import UpdateRecette from "./components/MiseAJourRecette/UpdateRecette";
 import NewRecipe from "./components/NouvelleRecette/NouvelleRecette";
 import Ingredients from "./components/ingredients/Ingredients";
+import Recettes from "./components/AllRecettes/Recettes";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -47,7 +48,7 @@ function App() {
       </div>
 
       <Routes>
-        <Route path="" element={<h1>Recettes</h1>} />
+        <Route path="" element={<Recettes />} />
         <Route path="update-recette" element={<UpdateRecette />} />
         <Route path="ingredients" element={<Ingredients />} />
 
