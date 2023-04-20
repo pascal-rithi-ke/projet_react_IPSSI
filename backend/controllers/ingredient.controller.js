@@ -143,6 +143,21 @@ export const deleteIngredient = (req, res) => {
   );
 };
 
+export const ingredientAlreadyExists = (req, res) => {
+  const { ingredient_id, unitId, qt_ingredient, id_recette } = req.body;
+  db_connect.query(
+    "INSERT INTO liste_ingredient (id_ingredient, id_unite, quantite_ingredient, id_recette) VALUES (?, ?, ?, ?)",
+    [ingredient_id, unitId, qt_ingredient, id_recette],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Erreur lors de la recherche de l'ingrédient");
+      }
+      res.send(result);
+    }
+  );
+};
+
 export const searchIngredient = (req, res) => {
   const { name } = req.params;
   db_connect.query(

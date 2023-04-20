@@ -49,7 +49,15 @@ function AjoutIngredient() {
                     })
                     setIngredient(ingredients);
                 } else {
-                    console.log(response.data);
+                    console.log('Ingrédient trouvé, ' + nomIngredient);
+                    axios.post('http://localhost:3002/api/ingredient/addToRecipe', {
+                        ingredient_id: response.data[0].id,
+                        name: nomIngredient,
+                        unitId: unitId,
+                        qt_ingredient: quantite,
+                        id_recette: 3
+                    })
+                    setIngredient(ingredients);
                 }
             })
             .catch(error => {
@@ -61,17 +69,18 @@ function AjoutIngredient() {
         <form onSubmit={handleSubmit}>
             <div id="ingredientName">
                 <p>Nom de l'ingrédient</p>
-                <input type="text" placeholder="Entrer le nom de l'ingrédient" value={nomIngredient} onChange={handleNomIngredientChange} />
+                <input required type="text" placeholder="Entrer le nom de l'ingrédient" value={nomIngredient} onChange={handleNomIngredientChange} />
             </div>
 
             <div id="quantity">
                 <p>Quantité</p>
-                <input type="text" placeholder="Entrer la quantité" defaultValue={quantite} onChange={handleQuantiteChange} />
+                <input required type="text" placeholder="Entrer la quantité" value={quantite} onChange={handleQuantiteChange} />
             </div>
 
             <div id="unit">
                 <p>Unité</p>
                 <select onChange={handleUnitChange}>
+                    <option value="">Choisir une unité</option>
                     {units.map((unit) => (
                         <option key={unit.id} value={unit.id}>{unit.nom} - {unit.label}</option>
                     ))}
