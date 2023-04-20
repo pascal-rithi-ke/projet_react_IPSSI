@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import '../../style/UpdateRecette.css'
+import '../../style/UpdateRecette.css';
+import AjoutIngredient from './AjouterIngredient';
 
 function UpdateRecette() {
     const [ingredients, setIngredient] = useState([]);
@@ -69,6 +70,7 @@ function UpdateRecette() {
     };
 
     return (
+        <>
         <form>
             <h1>Recette: {TitleRecipe}</h1>
             {ingredients.map((ingredient, index) => (
@@ -87,8 +89,9 @@ function UpdateRecette() {
                     <button className='btn-ingredient' onClick={(event) => handleDelete(event, ingredient.ingredient_id)} key={`delete-ingredient-${ingredient.ingredient_id}`}>Supprimer</button>
                 </div>
             ))}
-            <button>Ajouter un ingrédient</button>
         </form>
+        <AjoutIngredient/>
+        </>
     );
 }
 export default UpdateRecette;

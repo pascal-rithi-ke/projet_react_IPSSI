@@ -27,8 +27,7 @@ export const getIngredientById = (req, res) => {
 };
 
 export const addIngredient = (req, res) => {
-  const { name, unitId } = req.body;
-
+  const { name, unitId, qt_ingredient, id_recette} = req.body;
   // Ajout de l'ingrédient dans la table ingredient s'il n'existe pas déjà dans la base de données
   db_connect.query(
     "INSERT IGNORE INTO ingredient SET nom = ?",
@@ -44,8 +43,8 @@ export const addIngredient = (req, res) => {
 
       // Ajout de l'ingrédient dans la table liste_ingredient
       db_connect.query(
-        "INSERT INTO liste_ingredient (id_ingredient, id_unite) VALUES (?, ?)",
-        [ingredientId, unitId],
+        "INSERT INTO liste_ingredient (id_ingredient, id_unite, quantite_ingredient, id_recette) VALUES (?, ?, ?, ?)",
+        [ingredientId, unitId, qt_ingredient, id_recette],
         (err, _result) => {
           if (err) {
             console.error(err);
@@ -143,3 +142,17 @@ export const deleteIngredient = (req, res) => {
     }
   );
 };
+
+export const searchIngredient = (req, res) => {
+  const { name } = req.params;
+  db_connect.query(
+    "SELECT * FROM ingredient WHERE nom = ?", [name],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Erreur lors de la recherche de l'ingrédient");
+      }
+      res.send(result);
+    }
+  );
+}

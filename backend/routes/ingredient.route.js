@@ -7,6 +7,7 @@ import {
   addIngredient,
   updateIngredient,
   deleteIngredient,
+  searchIngredient
 } from "../controllers/ingredient.controller.js";
 
 const router = Router();
@@ -17,5 +18,6 @@ router.get("/:id", getIngredientById);
 router.post("/", addIngredient);
 router.put("/:id", updateIngredient);
 router.delete("/:id", deleteIngredient);
+router.get('/search/:name', searchIngredient)
 
 export { router as ingredientRouter };
