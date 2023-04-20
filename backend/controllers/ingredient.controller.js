@@ -1,6 +1,7 @@
 // Import de la connexion à la base de données
 import db_connect from "../config/db.js";
 
+// Récupération de tous les ingrédients
 export const getAllIngredients = (_req, res) => {
   db_connect.query("SELECT * FROM ingredient", (err, result) => {
     if (err) {
@@ -11,6 +12,7 @@ export const getAllIngredients = (_req, res) => {
   });
 };
 
+// Récupération de l'ingrédient par son id
 export const getIngredientById = (req, res) => {
   const { id } = req.params;
   db_connect.query(
@@ -26,6 +28,7 @@ export const getIngredientById = (req, res) => {
   );
 };
 
+// Ajoute l'ingrédient dans la table ingredient puis dans la table liste_ingredient
 export const addIngredient = (req, res) => {
   const { name, unitId, qt_ingredient, id_recette} = req.body;
   // Ajout de l'ingrédient dans la table ingredient s'il n'existe pas déjà dans la base de données
@@ -66,6 +69,7 @@ export const addIngredient = (req, res) => {
   );
 };
 
+// Met à jour l'ingrédient dans la table ingredient puis dans la table liste_ingredient
 export const updateIngredient = (req, res) => {
   const { id } = req.params;
   const { name, quantity, unitId } = req.body;
@@ -106,6 +110,7 @@ export const updateIngredient = (req, res) => {
   );
 };
 
+// Suppression de l'ingrédient dans la table liste_ingredient puis dans la table ingredient
 export const deleteIngredient = (req, res) => {
   const { id } = req.params;
 
@@ -143,6 +148,22 @@ export const deleteIngredient = (req, res) => {
   );
 };
 
+// Recherche si l'ingrédient existe déjà dans la base de données
+export const searchIngredient = (req, res) => {
+  const { name } = req.params;
+  db_connect.query(
+    "SELECT * FROM ingredient WHERE nom = ?", [name],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Erreur lors de la recherche de l'ingrédient");
+      }
+      res.send(result);
+    }
+  );
+}
+
+// Ajout de l'ingrédient dans la table liste_ingredient si il existe déjà dans la table ingredient
 export const ingredientAlreadyExists = (req, res) => {
   const { ingredient_id, unitId, qt_ingredient, id_recette } = req.body;
   db_connect.query(
@@ -158,16 +179,6 @@ export const ingredientAlreadyExists = (req, res) => {
   );
 };
 
-export const searchIngredient = (req, res) => {
-  const { name } = req.params;
-  db_connect.query(
-    "SELECT * FROM ingredient WHERE nom = ?", [name],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Erreur lors de la recherche de l'ingrédient");
-      }
-      res.send(result);
-    }
-  );
-}
+// NOTE:
+// searchIngredient & ingredientAlreadyExists sont complémentaires, si l'ingrédient existe déjà dans la table ingredient, 
+// on appelle la fonction ingredientAlreadyExists pour l'ajouter dans la table liste_ingredient

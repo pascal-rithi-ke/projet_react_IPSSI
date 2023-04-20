@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 function Logout({ handleLogout }) {
+    // Déconnexion de l'utilisateur
     useEffect(() => {
         handleLogout();
     }, [handleLogout]);

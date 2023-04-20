@@ -43,6 +43,7 @@ function Login({ setIsLogged }) {
     }
   };
 
+  // Vérifier si l'utilisateur vient de s'inscrire
   useEffect(() => {
     if (location.search.includes("success=true")) {
       setIsRegistered(true);

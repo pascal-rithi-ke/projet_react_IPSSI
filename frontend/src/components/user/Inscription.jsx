@@ -34,11 +34,13 @@ function Inscription(){
                 setError('Cet email existe déjà');
             } else {
                 setError('');
+                // Envoi des données au serveur
                 await axios.post('http://localhost:3002/api/insert/user', {
                     pseudo: pseudo,
                     email: email,
                     password: password,
                 });
+                // Réinitialisation des champs
                 setPseudo('');
                 setEmail('');
                 setPassword('');
